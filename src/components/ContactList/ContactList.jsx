@@ -1,12 +1,17 @@
+import { useEffect } from 'react';
 import css from './ContactList.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectContacts, selectFilter } from 'store/selector';
-import { deleteContact } from 'store/slice';
+import { selectContactsItems, selectFilter } from 'store/selector';
+import { deleteContact, fetchContacts } from 'store/thunk';
 
 const ContactList = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(selectContacts);
+  const contacts = useSelector(selectContactsItems);
   const filter = useSelector(selectFilter);
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   const getFilteredContacts = () => {
     if (!filter.trim()) {
@@ -28,7 +33,7 @@ const ContactList = () => {
         return (
           <li key={contact.id} className={css.contact}>
             <span>
-              {contact.name}: {contact.number}
+              {contact.name}: {contact.phone}
             </span>
             <button
               id={contact.id}
