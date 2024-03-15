@@ -3,7 +3,7 @@ export const handlePending = ({ contacts }) => {
   contacts.error = null;
 };
 
-export const handleRejected = ({ contacts }, { error }) => {
+export const handleRejected = ({ contacts }, { payload }) => {
   contacts.isLoading = false;
-  contacts.error = error.message;
+  contacts.error = payload;
 };
